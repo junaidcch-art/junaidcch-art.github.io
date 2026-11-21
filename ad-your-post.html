@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ad Your Post</title>
+<style>
+*{box-sizing:border-box;font-family:Arial}
+body{margin:0;background:#f2f2f2;padding:0 12px 90px}
+.header{background:#0A3D7A;color:white;display:flex;justify-content:space-between;align-items:center;padding:13px 15px;font-weight:bold;font-size:18px;position:sticky;top:0;z-index:10;margin:0 -12px}
+.header a{color:white;text-decoration:none;font-size:13px;border:1px solid white;padding:6px 10px;border-radius:20px}
+h2{text-align:center}
+.card{background:#fff;padding:14px;border-radius:12px;margin-bottom:12px;box-shadow:0 2px 8px #0001;margin-top:12px}
+label{font-weight:bold;font-size:14px;display:block;margin:12px 0 5px}
+input,select,textarea{width:100%;padding:11px;border:1px solid #ccc;border-radius:8px;font-size:15px}
+textarea{height:70px}
+.btn{width:100%;padding:12px;border:0;border-radius:10px;background:#ff6a00;color:#fff;font-size:17px;font-weight:bold;margin-top:14px}
+.btn2{padding:10px 14px;border:1px solid #ccc;border-radius:8px;background:#fff;margin:4px 4px 0 0}
+.btn2.active{background:#0b5ed7;color:#fff;border-color:#0b5ed7}
+.photo{display:flex;gap:8px;flex-wrap:wrap}
+.photo label{width:70px;height:70px;border:2px dashed #aaa;display:flex;align-items:center;justify-content:center;font-size:26px;border-radius:10px;margin:0;cursor:pointer}
+.photo input{display:none}
+.hidden{display:none}
+.catBtn{width:100%;text-align:left;padding:13px;background:#fff;border:1px solid #ddd;border-radius:10px;margin-bottom:8px;font-size:16px}
+/* Neeche wale button - Home jaisa */
+.bottom{position:fixed;bottom:0;left:0;width:100%;background:#0A3D7A;display:flex;justify-content:space-around;padding:10px 0}
+.bottom a{color:white;text-decoration:none;text-align:center;font-size:12px;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.bottom a b{display:block;font-size:20px}
+.bottom a.active{color:#FFD700}
+.plus-btn{background:#FF8C00;width:52px;height:52px;border-radius:50%;margin-top:-32px;display:flex;align-items:center;justify-content:center;font-size:30px!important;border:3px solid white;box-shadow:0 3px 8px rgba(0,0,0,0.3)}
+</style>
+</head>
+<body>
+
+<!-- UPAR HEADER + LOGO -->
+<div class="header"><span>🏠 PakMakan</span><a href="login.html">Login / Signin</a></div>
+
+<!-- STEP 1 : AD YOUR POST CATEGORIES -->
+<div id="cats">
+<h2>Ad Your Post</h2>
+<button class="catBtn" onclick="openForm('form1')">🏠 Plot / Makan / House / Shop / Commercial / Agricultural Land</button>
+<button class="catBtn" onclick="openForm('form2')">🔑 Rent Property</button>
+<button class="catBtn" onclick="openForm('form4','Contractor')">👷 Contractor</button>
+<button class="catBtn" onclick="openForm('form3')">🏪 Material / Business</button>
+<button class="catBtn" onclick="openForm('form4','Architect')">📐 Architect</button>
+<button class="catBtn" onclick="openForm('form4','Property Consultant')">💼 Property Consultant</button>
+<button class="catBtn" onclick="openForm('form5')">📢 Advertise</button>
+</div>
+
+<!-- FORM 1 : PROPERTY -->
+<div id="form1" class="card hidden">
+<h2>Property - Ad Your Post</h2>
+<label>Category</label>
+<div id="propCats">
+<button type="button" class="btn2 active" onclick="sel(this)">Plot</button>
+<button type="button" class="btn2" onclick="sel(this)">House / Makan</button>
+<button type="button" class="btn2" onclick="sel(this)">Shop</button>
+<button type="button" class="btn2" onclick="sel(this)">Commercial Property</button>
+<button type="button" class="btn2" onclick="sel(this)">Agricultural Land</button>
+</div>
+<label>Detail</label><textarea placeholder="Detail likhen"></textarea>
+<label>Area / Address</label><input placeholder="Area / Address">
+<label>Owner / Dealer</label><input placeholder="Owner / Dealer">
+<label>Phone No</label><input type="tel" placeholder="03xx-xxxxxxx">
+<label>Price</label><input type="number" placeholder="Price">
+<label>City</label><input placeholder="City">
+<label>Photo</label>
+<div class="photo">
+<label>+<input type="file" accept="image/*"></label>
+<label>+<input type="file" accept="image/*"></label>
+<label>+<input type="file" accept="image/*"></label>
+<label>+<input type="file" accept="image/*"></label>
+</div>
+<button class="btn" onclick="posted()">Post Now</button>
+<button class="btn2" style="width:100%;margin-top:8px" onclick="back()">⬅ Back</button>
+</div>
+
+<!-- FORM 2 : RENT -->
+<div id="form2" class="card hidden">
+<h2>Rent - Ad Your Post</h2>
+<label>Category</label>
+<div>
+<button type="button" class="btn2 active" onclick="sel(this)">House</button>
+<button type="button" class="btn2" onclick="sel(this)">Shop</button>
+<button type="button" class="btn2" onclick="sel(this)">Plaza</button>
+</div>
+<label>Detail</label><textarea placeholder="Detail"></textarea>
+<label>Contact Person - Name</label><input placeholder="Name">
+<label>Contact Number</label><input type="tel" placeholder="03xx-xxxxxxx">
+<label>Area</label><input placeholder="Area">
+<label>City</label><input placeholder="City">
+<label>Rent</label><input type="number" placeholder="Rent">
+<div>
+<button type="button" class="btn2 active" onclick="sel(this)">Per Month</button>
+<button type="button" class="btn2" onclick="sel(this)">Per Year</button>
+</div>
+<label>Photo</label>
+<div class="photo">
+<label>+<input type="file" accept="image/*"></label>
+<label>+<input type="file" accept="image/*"></label>
+<label>+<input type="file" accept="image/*"></label>
+<label>+<input type="file" accept="image/*"></label>
+</div>
+<button class="btn" onclick="posted()">Post Now</button>
+<button class="btn2" style="width:100%;margin-top:8px" onclick="back()">⬅ Back</button>
+</div>
+
+<!-- FORM 3 : MATERIAL / BUSINESS -->
+<div id="form3" class="card hidden">
+<h2>Material / Business - Ad Your Post</h2>
+<label>Category - Apni Category Dabao</label>
+<div id="matCats">
+<button type="button" class="btn2 active" onclick="sel(this)">Cement Merchant</button>
+<button type="button" class="btn2" onclick="sel(this)">Iron Stores</button>
+<button type="button" class="btn2" onclick="sel(this)">Paint Shop</button>
+<button type="button" class="btn2" onclick="sel(this)">Bricks Suppliers</button>
+<button type="button" class="btn2" onclick="sel(this)">Sanitary Shops</button>
+<button type="button" class="btn2" onclick="sel(this)">Marble Factory</button>
+<button type="button" class="btn2" onclick="sel(this)">Tiles Shops</button>
+<button type="button" class="btn2" onclick="sel(this)">Electric Stores</button>
+<button type="button" class="btn2" onclick="sel(this)">Wood Works Shops</button>
+<button type="button" class="btn2" onclick="sel(this)">Hardware Shops</button>
+<button type="button" class="btn2" onclick="sel(this)">Tools Shops</button>
+<button type="button" class="btn2" onclick="sel(this)">Furniture Shops</button>
+</div>
+<label>Business Name</label><input placeholder="Business Name">
+<label>Owner Name</label><input placeholder="Owner Name">
+<label>Phone No</label><input type="tel" placeholder="03xx-xxxxxxx">
+<label>City</label><input placeholder="City">
+<label>Detail / Rate</label><textarea placeholder="Rate / Detail likhen"></textarea>
+<label>Photo</label>
+<div class="photo">
+<label>+<input type="file" accept="image/*"></label>
+<label>+<input type="file" accept="image/*"></label>
+</div>
+<button class="btn" onclick="posted()">Post Now</button>
+<button class="btn2" style="width:100%;margin-top:8px" onclick="back()">⬅ Back</button>
+</div>
+
+<!-- FORM 4 : CONTRACTOR / ARCHITECT / CONSULTANT -->
+<div id="form4" class="card hidden">
+<h2 id="form4Title">Contractor - Ad Your Post</h2>
+<label>Category - Apni Category Dabao</label>
+<div id="form4Cats"></div>
+<label id="form4NameLabel">Contractor Name</label><input placeholder="Name">
+<label>Phone No</label><input type="tel" placeholder="03xx-xxxxxxx">
+<label>City</label><input placeholder="City">
+<label>Detail / Kaam</label><textarea placeholder="Kaam ki detail likhen"></textarea>
+<button class="btn" onclick="posted()">Post Now</button>
+<button class="btn2" style="width:100%;margin-top:8px" onclick="back()">⬅ Back</button>
+</div>
+
+<!-- FORM 5 : ADVERTISE -->
+<div id="form5" class="card hidden">
+<h2>Advertise</h2>
+<label>Your 20 Second Video</label>
+<div class="photo"><label>+ Video<input type="file" accept="video/*"></label></div>
+<label>Your Still Banner</label>
+<div class="photo">
+<label>+ Pic<input type="file" accept="image/*"></label>
+<label>+ Pic<input type="file" accept="image/*"></label>
+</div>
+<label>City</label><input placeholder="City">
+<label>Phone No</label><input type="tel" placeholder="03xx-xxxxxxx">
+<button class="btn" onclick="posted()">Post Now</button>
+<button class="btn2" style="width:100%;margin-top:8px" onclick="back()">⬅ Back</button>
+</div>
+
+<!-- NEECHE WALE BUTTON -->
+<div class="bottom">
+<a href="home.html"><b>🏠</b>Home</a>
+<a href="all-ads.html"><b>🔍</b>Search</a>
+<a href="Ad-your-post.html" class="active"><div class="plus-btn">+</div>Post</a>
+<a href="favorites.html"><b>❤️</b>Favorites</a>
+<a href="profile.html"><b>👤</b>Profile</a>
+</div>
+
+<script>
+let contractorCats=["Building","Paint","Electrical","Woodwork","Plumbing","Aluminium","Steel Fixer","Marble / Tiles","Shuttering","Kitchen Master","Fall Ceiling"];
+let architectCats=["Architect","Map Design","3D Design","Estimate"];
+let consultantCats=["Property Consultant","Buy","Sale","Rent"];
+function openForm(id, type){
+  document.getElementById('cats').classList.add('hidden');
+  ['form1','form2','form3','form4','form5'].forEach(f=>document.getElementById(f).classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+  if(id=='form4' && type){
+    document.getElementById('form4Title').innerText = type + ' - Ad Your Post';
+    document.getElementById('form4NameLabel').innerText = type + ' Name';
+    let cats = type=='Contractor' ? contractorCats : type=='Architect' ? architectCats : consultantCats;
+    document.getElementById('form4Cats').innerHTML = cats.map((c,i)=>`<button type="button" class="btn2 ${i==0?'active':''}" onclick="sel(this)">${c}</button>`).join("");
+  }
+  window.scrollTo(0,0);
+}
+function back(){
+  ['form1','form2','form3','form4','form5'].forEach(f=>document.getElementById(f).classList.add('hidden'));
+  document.getElementById('cats').classList.remove('hidden');
+}
+function sel(btn){
+  let parent = btn.parentElement;
+  parent.querySelectorAll('.btn2').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+function posted(){
+  // Jo form khula hua hai uska data uthao
+  let openForm = document.querySelector('.card:not(.hidden)');
+  if(!openForm){ alert('Pehle form kholo'); return; }
+  
+  let inputs = openForm.querySelectorAll('input, textarea');
+  let title = openForm.querySelector('h2').innerText;
+  let activeBtn = openForm.querySelector('.btn2.active');
+  if(activeBtn) title = activeBtn.innerText + " - " + title;
+
+  let detail = "", price = "", city = "", phone = "";
+  inputs.forEach(inp=>{
+    let ph = (inp.placeholder || "").toLowerCase();
+    if(ph.includes("detail") || ph.includes("kaam")) detail = inp.value;
+    if(ph.includes("price") || ph.includes("rent")) price = inp.value;
+    if(ph.includes("city")) city = inp.value;
+    if(ph.includes("03xx") || ph.includes("phone")) phone = inp.value;
+  });
+
+  if(!city) city = "Bhalwal";
+  if(!price) price = "0";
+
+  let oldAds = JSON.parse(localStorage.getItem('pakmakan_ads') || "[]");
+  oldAds.unshift({title: title, detail: detail, price: price, city: city, phone: phone});
+  localStorage.setItem('pakmakan_ads', JSON.stringify(oldAds));
+
+  alert('Ad Post ho gaya!');
+  window.location.href = "home.html";
+}
+function selectCat(containerId, val){
+  let box=document.getElementById(containerId);
+  if(!box) return;
+  box.querySelectorAll('.btn2').forEach(b=>{
+    if(b.innerText.trim().toLowerCase()==val.toLowerCase() || val.toLowerCase().includes(b.innerText.trim().toLowerCase()) || b.innerText.trim().toLowerCase().includes(val.toLowerCase())) b.classList.add('active');
+    else b.classList.remove('active');
+  });
+}
+let p = new URLSearchParams(location.search).get('type');
+if(p){
+  let parts = decodeURIComponent(p).split('|');
+  let form = parts[0], cat = parts[1]||"";
+  if(form=='Property') openForm('form1');
+  else if(form=='Rent' || cat=='Rent Property') openForm('form2');
+  else if(form=='Material') openForm('form3');
+  else if(form=='Contractor') openForm('form4','Contractor');
+  else if(form=='Architect') openForm('form4','Architect');
+  else if(form=='Property Consultant') openForm('form4','Property Consultant');
+  else if(form=='Ads') openForm('form5');
+  if(form=='Property') selectCat('propCats', cat);
+  if(form=='Material') selectCat('matCats', cat);
+  if(form=='Contractor' || form=='Architect' || form=='Property Consultant') selectCat('form4Cats', cat);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PakMakan - Home</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#f2f2f2;padding-bottom:90px}
+.header{background:#0A3D7A;color:white;display:flex;justify-content:space-between;align-items:center;padding:13px 15px;font-weight:bold;font-size:18px;position:sticky;top:0;z-index:10}
+.header a{color:white;text-decoration:none;font-size:13px;border:1px solid white;padding:6px 10px;border-radius:20px}
+.container{padding:12px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.main-btn{background:#0A3D7A;color:white;border:none;padding:13px 8px;border-radius:12px;font-weight:bold;font-size:13px;cursor:pointer}
+.main-btn.orange{background:#FF8C00}
+.main-btn.active{background:#FF8C00}
+.sub{display:none;background:white;border-radius:12px;padding:10px;margin:-5px 0 10px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.sub.show{display:block}
+.sub button{background:#EEF3FB;border:1px solid #0A3D7A;color:#0A3D7A;padding:7px 10px;border-radius:20px;margin:3px;font-size:13px}
+.sub button.active{background:#0A3D7A;color:white}
+.city-box{background:white;padding:12px;border-radius:12px;margin-bottom:12px}
+.city-box select{width:100%;padding:11px;border-radius:10px;border:1px solid #ccc;font-size:15px;margin-top:8px}
+.search-box{display:flex;gap:8px;margin-bottom:12px}
+.search-box input{flex:1;padding:12px;border-radius:10px;border:1px solid #ccc;outline:none}
+.search-box button{background:#0A3D7A;color:white;border:none;padding:0 16px;border-radius:10px}
+.card{background:white;border-radius:12px;display:flex;gap:10px;padding:10px;margin-bottom:10px;box-shadow:0 1px 6px rgba(0,0,0,.1);cursor:pointer}
+.card img{width:110px;height:95px;object-fit:cover;border-radius:10px}
+.card h3{font-size:14px;color:#0A3D7A}
+.price{color:green;font-weight:bold;font-size:15px;margin:3px 0}
+.meta{font-size:12px;color:#555}
+.tag{background:#FFF0D9;color:#FF8C00;font-size:11px;padding:2px 8px;border-radius:20px;margin-top:4px;font-weight:bold;display:inline-block}
+.bottom{position:fixed;bottom:0;left:0;width:100%;background:#0A3D7A;display:flex;justify-content:space-around;padding:10px 0}
+.bottom a{color:white;text-decoration:none;text-align:center;font-size:12px;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.bottom a b{display:block;font-size:20px}
+.bottom a.active{color:#FFD700}
+.plus-btn{background:#FF8C00;width:52px;height:52px;border-radius:50%;margin-top:-32px;display:flex;align-items:center;justify-content:center;font-size:30px!important;border:3px solid white;box-shadow:0 3px 8px rgba(0,0,0,0.3)}
+/* TUMHARI DRAWING WALA LAYOUT */
+.layout{display:flex;gap:12px;align-items:flex-start}
+.main-col{flex:1;min-width:0}
+.sidebar{width:340px;flex-shrink:0;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.side-box{background:white;border-radius:12px;padding:12px;box-shadow:0 1px 6px rgba(0,0,0,.1);text-align:center;min-height:150px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.free-box{border:2px dashed #FF8C00}
+.free-box h3{color:#FF8C00;font-size:13px;margin-bottom:6px}
+.free-box p{font-size:11px;color:#555;margin-bottom:8px;line-height:1.4}
+.free-btn{background:#FF8C00;color:white;border:none;padding:8px 10px;border-radius:8px;font-weight:bold;font-size:12px;cursor:pointer;width:100%}
+.google-box{background:#f8f8f8;border:1px dashed #bbb;color:#999}
+.google-box small{font-size:10px;letter-spacing:1px}
+@media(max-width:800px){.layout{flex-direction:column}.sidebar{width:100%}}
+</style>
+</head>
+<body>
+
+<div class="header"><span>🏠 PakMakan</span><a href="login.html">Login / Signin</a></div>
+
+<div class="container">
+
+<div class="grid">
+<button class="main-btn" onclick="toggleSub('s1',this)">🔍 Search For Sale</button>
+<button class="main-btn" onclick="toggleSub('s2',this)">🧱 Search Business</button>
+<button class="main-btn" onclick="toggleSub('s3',this)">👷 Contractor</button>
+<button class="main-btn orange" onclick="toggleSub('s4',this)">➕ Ad Your Post</button>
+<button class="main-btn" onclick="toggleSub('s5',this)">🏡 Property Consultant</button>
+<button class="main-btn" onclick="toggleSub('s6',this)">📐 Architect</button>
+<button class="main-btn" onclick="toggleSub('s7',this)">📍 Search Your City</button>
+<button class="main-btn orange" onclick="toggleSub('s8',this)">📢 Advertise</button>
+</div>
+
+<div id="s1" class="sub"></div>
+<div id="s2" class="sub"></div>
+<div id="s3" class="sub"></div>
+<div id="s4" class="sub"></div>
+<div id="s5" class="sub"></div>
+<div id="s6" class="sub"></div>
+<div id="s7" class="sub"></div>
+<div id="s8" class="sub"></div>
+
+<div class="city-box">
+<b>📍 Search Your City:</b>
+<select id="citySelect" onchange="applyFilter()">
+<option value="All">All Cities - Sab Sheher</option>
+<option>Bhalwal</option><option>Sargodha</option><option>Lahore</option><option>Karachi</option><option>Islamabad</option><option>Faisalabad</option><option>Multan</option><option>Gujrat</option><option>Rawalpindi</option>
+</select>
+</div>
+
+<div class="search-box">
+<input id="searchInput" placeholder="Search - Brick, Plot, Contractor...">
+<button onclick="applyFilter()">🔍</button>
+</div>
+
+<div class="layout">
+<div class="main-col">
+<p id="resultText" style="font-size:13px;color:#555;margin-bottom:5px;"></p>
+<div id="adsList"></div>
+<p id="emptyMsg" style="text-align:center;color:#555;margin-top:15px;">Abhi koi Ad nahi hai.</p>
+</div>
+
+<div class="sidebar">
+<!-- RIGHT SIDE - 2x2 - SATH SATH -->
+<div class="side-box free-box">
+<h3>⭐ FREE Ad</h3>
+<p>Motorcycle / School / Shop<br>Kisi bhi kaam ka!</p>
+<button class="free-btn" onclick="window.location.href='ad-your-post.html?type='+encodeURIComponent('Ads|Your Business')">FREE Lagwayen</button>
+</div>
+
+<div class="side-box google-box">
+<small>ADVERTISEMENT</small>
+<p style="font-size:12px;margin-top:8px;">Google Ads<br>Yahan Aayen Ge</p>
+</div>
+
+<div class="side-box free-box">
+<h3>⭐ FREE Ad</h3>
+<p>Apni Dukan ka<br>Ad Lagwayen!</p>
+<button class="free-btn" onclick="window.location.href='ad-your-post.html?type='+encodeURIComponent('Ads|Your Business')">FREE Lagwayen</button>
+</div>
+
+<div class="side-box google-box">
+<small>ADVERTISEMENT</small>
+<p style="font-size:12px;margin-top:8px;">Google Ads<br>Yahan Aayen Ge</p>
+</div>
+</div>
+</div>
+
+</div>
+
+<div class="bottom">
+<a href="home.html" class="active"><b>🏠</b>Home</a>
+<a href="all-ads.html"><b>🔍</b>Search</a>
+<a href="ad-your-post.html"><div class="plus-btn">+</div>Post</a>
+<a href="favorites.html"><b>❤️</b>Favorites</a>
+<a href="profile.html"><b>👤</b>Profile</a>
+</div>
+
+<script>
+let forSale=["Plot","Makan / House","Shops","Commercial Property","Rental Property","Agricultural Land"];
+let business=["Cement Merchant","Iron Stores","Paint Shop","Bricks Suppliers","Sanitary Shops","Marble Factory","Tiles Shops","Electric Stores","Wood Works Shops","Hardware Shops","Tools Shops","Furniture Shops"];
+let contractor=["Building","Paint","Electrical","Woodwork","Plumbing","Aluminium","Steel Fixer","Marble / Tiles","Shuttering","Kitchen Master","Fall Ceiling"];
+let postAd=["Plot","Makan / House","Shop","Commercial Property","Agricultural Land","Rent Property","Contractor","Material / Business","Architect","Ads","Property Consultant"];
+let consultant=["Property Consultant","Buy","Sale","Rent"];
+let architect=["Architect","Map Design","3D Design","Estimate"];
+let advertise=["Your Business","Your Occupation / Work","Anything"];
+function makeSub(id, arr, type){
+  let el=document.getElementById(id);
+  el.innerHTML = arr.map(x=>`<button onclick="clickSub('${x}','${type}',this)">${x}</button>`).join("");
+}
+makeSub("s1",forSale,"filter");
+makeSub("s2",business,"filter");
+makeSub("s3",contractor,"filter");
+makeSub("s4",postAd,"post");
+makeSub("s5",consultant,"filter");
+makeSub("s6",architect,"filter");
+makeSub("s7",["All Cities","Bhalwal","Sargodha","Lahore","Karachi","Islamabad","Gujrat"],"city");
+makeSub("s8",advertise,"post");
+function toggleSub(id, btn){
+  document.querySelectorAll(".sub").forEach(s=>s.classList.remove("show"));
+  document.querySelectorAll(".main-btn").forEach(b=>b.classList.remove("active"));
+  document.getElementById(id).classList.add("show");
+  btn.classList.add("active");
+}
+function getPostForm(val){
+  if(["Plot","Makan / House","Shop","Commercial Property","Agricultural Land","Rent Property"].includes(val)) return "Property|"+val;
+  if(val=="Contractor") return "Contractor|Building";
+  if(val=="Material / Business") return "Material|Cement Merchant";
+  if(val=="Architect") return "Architect|Architect";
+  if(val=="Property Consultant") return "Property Consultant|Property Consultant";
+  if(val=="Ads" || val=="Your Business" || val=="Your Occupation / Work" || val=="Anything") return "Ads|"+val;
+  return "Property|"+val;
+}
+function clickSub(val,type,btn){
+  document.querySelectorAll(".sub button").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  if(type=="post"){
+    let form = getPostForm(val);
+    window.location.href="ad-your-post.html?type="+encodeURIComponent(form);
+  } else if(type=="city"){
+    document.getElementById("citySelect").value = val=="All Cities"?"All":val;
+    applyFilter();
+  } else {
+    document.getElementById("searchInput").value=val;
+    applyFilter();
+  }
+}
+let allAds = JSON.parse(localStorage.getItem("pakmakan_ads")||"[]");
+allAds = allAds.map(a=>{
+  return {
+    title: a.title || a.name || a.heading || "",
+    price: a.price || a.rate || a.qeemat || "Contact",
+    location: a.location || a.city || a.sheher || "Bhalwal",
+    desc: a.desc || a.detail || a.description || "",
+    type: a.type || a.category || "Property",
+    image: a.image || a.photo || ""
+  };
+}).filter(a => a.title && a.title !== "undefined" && a.title !== "");
+if(allAds.length==0){
+  allAds=[
+    {title:"5 Marla Plot - Bhalwal",price:"2500000",location:"Bhalwal",type:"Plot",desc:"Main road, gas bijli available",image:""},
+    {title:"Achi Brick - Sargodha",price:"18000 / 1000",location:"Sargodha",type:"Brick",desc:"Awwal Brick, delivery available",image:""},
+    {title:"Building Contractor - Lahore",price:"Contact",location:"Lahore",type:"Contractor",desc:"Makan, Shop, Plaza ka kaam",image:""},
+    {title:"10 Marla Makan - Lahore",price:"8500000",location:"Lahore",type:"House",desc:"3 Bed, New Construction",image:""},
+    {title:"Marble / Tiles Mistri - Karachi",price:"Contact",location:"Karachi",type:"Marble",desc:"Marble Tiles ka expert kaam",image:""},
+    {title:"Architect - Map Design",price:"Contact",location:"Islamabad",type:"Architect",desc:"Naksha, 3D, Estimate",image:""},
+    {title:"Property Consultant - Bhalwal",price:"Contact",location:"Bhalwal",type:"Property Consultant",desc:"Plot Makan ki khareed farokht",image:""},
+    {title:"Cement / Steel - Gujrat",price:"Best Rate",location:"Gujrat",type:"Cement",desc:"Factory rate pe material",image:""}
+  ];
+}
+function applyFilter(){
+  let city=document.getElementById("citySelect").value;
+  let q=document.getElementById("searchInput").value.toLowerCase();
+  let list=document.getElementById("adsList");
+  let empty=document.getElementById("emptyMsg");
+  list.innerHTML="";
+  let filtered=allAds.filter(ad=>{
+    let matchCity = city=="All" || ad.location.toLowerCase().includes(city.toLowerCase());
+    let matchQ = (ad.title+" "+ad.location+" "+ad.type+" "+ad.desc).toLowerCase().includes(q);
+    return matchCity && matchQ;
+  });
+  document.getElementById("resultText").innerText = city=="All" ? "Sab Cities ke Ads chal rahe hain - "+filtered.length+" Ads" : city+" ke Ads - "+filtered.length+" Ads";
+  if(filtered.length==0){ empty.style.display="block"; empty.innerText="Is City / Cheez ka koi Ad nahi mila."; }
+  else{
+    empty.style.display="none";
+    filtered.forEach(ad=>{
+      list.innerHTML+=`<div class="card" onclick="openAd('${ad.title}')">
+        <img src="${ad.image||'https://via.placeholder.com/200x150?text=PakMakan'}">
+        <div><h3>${ad.title}</h3><div class="price">Rs. ${ad.price}</div><div class="meta">📍 ${ad.location} - ${ad.type}</div><div class="meta">${ad.desc}</div><span class="tag">${ad.type} • Detail Dekho →</span></div>
+      </div>`;
+    });
+  }
+}
+function openAd(title){
+  let ad=allAds.find(a=>a.title==title);
+  localStorage.setItem("pakmakan_selected_ad",JSON.stringify(ad));
+  window.location.href="ad-detail.html";
+}
+document.getElementById("searchInput").addEventListener("input",applyFilter);
+applyFilter();
+</script>
+</body>
+</html>
